@@ -5,6 +5,5 @@
 node_modules
 .idea
 /build
-/public
-/public/images
-/public/fonts
+/public/bundle.js
+/public/bundle.js.map
