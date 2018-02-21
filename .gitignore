@@ -1,0 +1,10 @@
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+node_modules
+.idea
+/build
+/public
+/public/images
+/public/fonts
