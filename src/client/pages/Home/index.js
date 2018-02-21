@@ -7,6 +7,11 @@ import {getDealers, homeUI} from "../../../redux/actions";
 const styles = {
     root: {
         paddingTop: 120
+    },
+    '@media (max-width: 767px)': {
+        root: {
+            paddingTop: 80
+        },
     }
 };
 

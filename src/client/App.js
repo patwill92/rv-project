@@ -20,7 +20,7 @@ const styles = theme => ({
     },
     background: {
         backgroundImage: 'url("images/water-image.png")',
-        backgroundSize: 'auto',
+        backgroundSize: 'contain',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: '0 20%',
         width: '100%',
@@ -29,9 +29,14 @@ const styles = theme => ({
         zIndex: -1,
         top: 0
     },
+    '@media (min-width: 768px) and (max-width: 991px)': {
+        background: {
+            backgroundPosition: '0 180px',
+        },
+    },
     '@media (max-width: 767px)': {
         background: {
-            backgroundPosition: '0 40px',
+            backgroundPosition: '0 80px',
         },
     }
 });
