@@ -12,6 +12,9 @@ export default [
                 ...Home,
                 path: '/',
                 exact: true
+            },
+            {
+                ...Home
             }
         ]
     }

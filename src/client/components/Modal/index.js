@@ -36,22 +36,6 @@ const styles = theme => ({
             background: 'transparent'
         }
     },
-    background: {
-        margin: 'auto',
-        backgroundColor: theme.palette.primary,
-        top: 0,
-        position: 'fixed',
-        left: '25%',
-        width: '50%',
-        animationFillMode: 'forwards !important',
-        zIndex: 10,
-        '& *': {
-            zIndex: 10
-        },
-        maxHeight: '90%',
-        overflowY: 'scroll',
-        '-webkit-overflow-scrolling': 'touch'
-    },
     overlay: {
         position: 'fixed',
         width: '100%',
@@ -71,7 +55,7 @@ const styles = theme => ({
         left: '25%',
         width: '50%',
         animationFillMode: 'forwards !important',
-        zIndex: 11,
+        zIndex: 10,
         '& *': {
             zIndex: 10
         },
@@ -170,7 +154,7 @@ class Modal extends Component {
     render() {
         const {classes, modal} = this.props;
         return (
-            <div className={classes.background}>
+            <Fragment>
                 <div className={classes.overlay} style={{animation: this.state.overlay}} onClick={this.closeModal}/>
                 <div className={classes.root} style={{animation: this.state.animation}}>
                     <Container className={classes.header} component={'header'} padding>
@@ -187,8 +171,7 @@ class Modal extends Component {
                         <Text className={classes.message} component={'div'} type={'caption'}>
                             Fill out the form below and Premium <span>{modal.name}</span> will get in touch
                         </Text>
-                        <Form ownPool={this.state.ownPool} closeModal={this.closeModal} flipSwitch={this.flipSwitch}
-                              onSubmit={this.sendForm}
+                        <Form ownPool={this.state.ownPool} closeModal={this.closeModal} flipSwitch={this.flipSwitch} onSubmit={this.sendForm}
                               reply={modal.message || null}/>
                     </Container>
                     <Container className={classes.footer} padding>
@@ -204,7 +187,7 @@ class Modal extends Component {
                         </Text>
                     </Container>
                 </div>
-            </div>
+            </Fragment>
         )
     };
 }
