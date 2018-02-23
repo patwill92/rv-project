@@ -18,11 +18,11 @@ const styles = theme => ({
     container: {
         extend: theme.rowBetween,
         alignItems: 'center',
-        flexWrap: 'wrap'
+        flexWrap: 'wrap',
     },
     links: {
         color: theme.palette.primary,
-        padding: '30px 15px',
+        padding: '0px 15px',
         textDecoration: 'none',
         display: 'inline-block'
     },
@@ -43,10 +43,13 @@ const styles = theme => ({
         padding: '8px 15px'
     },
     menuIcon: {
-        extend: '$figure',
-        width: 40,
-        height: 40,
-        display: 'none'
+        maxWidth: 50,
+        maxHeight: 50,
+        minWidth: 40,
+        minHeight: 40,
+        display: 'none',
+        extend: theme.colCenter,
+        margin: 0
     },
     navHeader: {
         display: 'none'
@@ -54,15 +57,25 @@ const styles = theme => ({
     arrow: {
         display: 'none'
     },
+    nav: {
+        flexBasis: '60%',
+        extend: theme.rowBetween,
+        alignItems: 'center',
+        padding: '30px 0px',
+        marginRight: 30
+    },
     '@media (min-width: 768px) and (max-width: 991px)': {
         container: {
             justifyContent: 'center',
         },
         linksWrapper: {
-            justifyContent: 'center'
+            justifyContent: 'space-between'
         },
         figure: {
             marginTop: 16
+        },
+        nav: {
+            flex: 1
         }
     },
     ...mobileStyles(theme)
@@ -84,31 +97,30 @@ class MainNav extends Component {
     };
 
     render() {
-        const {classes} = this.props;
+        const {classes, modal} = this.props;
         let navClass;
-        if(this.state.opened) {
+        if (this.state.opened) {
             navClass = this.props.navOpen ? classes.navShow + ' ' + classes.nav : classes.navHide + ' ' + classes.nav;
         } else {
             navClass = this.props.navOpen ? classes.navShow + ' ' + classes.nav : classes.nav;
         }
         const linkList = ['Pools & Spas', 'Supplies', 'Resources', 'Services'];
         return (
-            <section className={classes.root}>
+            <section className={classes.root} style={{paddingRight: modal ? 17 : 0}}>
                 <Container className={classes.container}>
                     <figure className={classes.figure}>
                         <img className={classes.img} src="images/pool-pros-logo.png" alt="pool-props-logo"/>
                     </figure>
                     <section className={classes.linksWrapper}>
                         <nav className={navClass}>
-                            <header>
-                                <Text className={classes.navHeader}
-                                      weight={'medium'}
-                                      type={'subtitle'}>
-                                    <span>Menu</span>
-                                    <span onClick={this.openNav}
-                                          className={classes.close}>&times;</span>
-                                </Text>
-                            </header>
+                            <Text className={classes.navHeader}
+                                  weight={'medium'}
+                                  component={'header'}
+                                  type={'subtitle'}>
+                                Menu
+                                <span onClick={this.openNav}
+                                      className={classes.close}>&times;</span>
+                            </Text>
                             {linkList.map(link => {
                                 return (
                                     <Text key={link} className={classes.links}

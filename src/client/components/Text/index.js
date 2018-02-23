@@ -2,65 +2,60 @@ import React from 'react'
 import injectSheet from 'react-jss'
 import PropTypes from 'prop-types'
 
-const fontSize = (size) => {
-    switch (size) {
-        case 'title':
-            return 26;
-        case 'subtitle':
-            return 18;
-        case 'caption':
-            return 12;
-        default:
-            return 15;
+import helper from './helpers'
+
+const {createClasses, fontSize, fontWeight, weights, sizes, getClassNames} = helper();
+
+const styles = {
+    ...createClasses(sizes, fontSize, 'fontSize'),
+    ...createClasses(weights, fontWeight, 'fontWeight'),
+    italic: {
+        fontStyle: 'italic'
+    },
+    capitalize: {
+        textTransform: 'capitalize'
+    },
+    uppercase: {
+        textTransform: 'uppercase'
     }
 };
-
-const fontWeight = (weight) => {
-    switch (weight) {
-        case 'extraBold':
-            return 800;
-        case 'bold':
-            return 700;
-        case 'medium':
-            return 600;
-        case 'light':
-            return 300;
-        default:
-            return 400;
-    }
-};
-
-const styles = theme => ({
-    root: {
-        fontSize: props => fontSize(props.type),
-        fontWeight: props => fontWeight(props.weight),
-        fontStyle: props => props.italic ? 'italic' : 'normal'
-    }
-});
 
 export const Text = props => {
-    const {classes, children, type, component, className, to} = props;
-    const textClass = className ? classes.root + ' ' + className : classes.root;
-    const parentProps = {className: textClass, to};
+    const {
+        children,
+        type,
+        component,
+        className,
+        to,
+        weight,
+        italic,
+        classes,
+        capitalize,
+        uppercase,
+        onClick
+    } = props;
+    let textClass = getClassNames(type, weight, classes, italic, capitalize, uppercase).join(' ');
+    textClass = className ? textClass + ' ' + className : textClass;
+    const parentProps = {className: textClass, to, onClick};
     if (component) {
         return React.createElement(component, {...parentProps}, children)
     }
     switch (type) {
         case 'title':
             return (
-                <h2 className={textClass}>{children}</h2>
+                <h2 {...parentProps}>{children}</h2>
             );
         case 'subtitle':
             return (
-                <h3 className={textClass}>{children}</h3>
+                <h3 {...parentProps}>{children}</h3>
             );
         case 'caption':
             return (
-                <div className={textClass}>{children}</div>
+                <div {...parentProps}>{children}</div>
             );
         default:
             return (
-                <p className={textClass}>{children}</p>
+                <p {...parentProps}>{children}</p>
             );
     }
 };
@@ -75,7 +70,15 @@ Text.propTypes = {
         PropTypes.string,
         PropTypes.func,
     ]),
-    to: PropTypes.string
+    to: PropTypes.string,
+    capitalize: PropTypes.bool,
+    uppercase: PropTypes.bool,
+    onClick: PropTypes.func
 };
 
-export default injectSheet(styles)(Text)
+Text.defaultProps = {
+    type: 'normal',
+    weight: 'regular'
+};
+
+export default injectSheet(styles, {link: true})(Text)

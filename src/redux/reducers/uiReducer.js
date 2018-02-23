@@ -5,9 +5,11 @@ export default (state = {}, action) => {
         case TOGGLE_NAV:
             return {...state, nav: action.payload};
         case OPEN_MODAL:
+            let payload = !action.payload ? action.payload :
+                {...state.modal, ...action.payload};
             return {...state, modal: action.payload};
         case HOME_UI:
-            return {...state, home: {...state.home,...action.payload}};
+            return {...state, home: {...state.home, ...action.payload}};
         default:
             return state;
     }

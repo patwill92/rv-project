@@ -1,33 +1,35 @@
 import React from 'react'
 import injectSheet from 'react-jss'
+import {connect} from 'react-redux'
 
 import Text from '../../../../components/Text'
 import mobileStyles from './mobileStyles'
+import {filterDealers} from "../../../../../redux/actions";
 
 const styles = theme => ({
     root: {
         color: theme.palette.darkGrey,
         lineHeight: '100%',
-        extend: theme.rowBetween,
         alignItems: 'center',
-        marginLeft: '1em'
+        extend: theme.rowBetween,
+        marginLeft: '0.5em'
     },
-    radioActive: {
-        backgroundColor: theme.palette.primaryLight,
+    radio: {
         height: 20,
         width: 20,
         borderRadius: 5,
         display: 'inline-block',
         cursor: 'pointer',
         marginRight: 10,
-        '& span': {
-            height: 20,
-            width: 20,
-            backgroundColor: '#fff',
-            transform: 'scale(0.3)',
-            borderRadius: 3,
-            display: 'inline-block',
-        }
+        backgroundColor: '#fff',
+        border: '1px solid #d8d8d8',
+        '&:checked': {
+            border: `7px solid ${theme.palette.primaryLight}`,
+        },
+        '&:focus': {
+            outline: 'none'
+        },
+        '-webkit-appearance': 'none'
     },
     toolTip: {
         height: 19,
@@ -41,24 +43,34 @@ const styles = theme => ({
         '& img': {
             width: 'auto',
             height: 19
-        }
+        },
+        display: 'inline-block'
     },
     ...mobileStyles(theme)
 });
 
 const Radio = props => {
-    const {classes, text, i} = props;
+    const {classes, text, i, service} = props;
     return (
-        <Text type={'caption'} className={classes.root}>
-            <span className={classes.radioActive}>
-                <span/>
-            </span>
-            {text}
+        <label className={classes.root} htmlFor={service}>
+            <input value={text.toLowerCase()}
+                   type="checkbox"
+                   checked={props.filters.includes(text.toLowerCase())}
+                   className={classes.radio}
+                   onChange={(e) => {
+                       props.filterDealers({
+                           action: e.target.checked,
+                           value: e.target.value,
+                           currentQuery: props.filters,
+                           dealers: props.dealers
+                       })
+                   }}/>
+            <Text type={'caption'} weight={'medium'} component={'span'} className={classes.text}>{text}</Text>
             {i && <figure className={classes.toolTip}>
                 <img src="images/tool-tip-icon-filtering.png" alt=""/>
             </figure>}
-        </Text>
+        </label>
     )
 };
 
-export default injectSheet(styles)(Radio)
+export default connect(({ui}) => ({filters: ui.home.filters, list: ui.home.list, dealers: ui.home.dealers}), {filterDealers})(injectSheet(styles)(Radio))

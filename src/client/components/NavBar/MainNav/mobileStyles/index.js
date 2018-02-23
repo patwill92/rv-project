@@ -1,25 +1,30 @@
 export default theme => ({
     '@media (max-width: 767px)': {
+        container: {
+          flexWrap: 'nowrap'
+        },
         navHeader: {
-            display: 'block',
-            extend: 'links',
-            margin: 0,
+            extend: theme.rowCenter,
+            alignItems: 'center',
             backgroundColor: '#fff',
             textAlign: 'center',
             textTransform: 'uppercase',
+            margin: '0px auto',
+            color: theme.palette.primary,
+            padding: '28px 0px',
+            width: 'calc(100% - 30px)',
             position: 'relative'
         },
         close: {
             color: theme.palette.secondary,
             position: 'absolute',
-            right: 18,
-            top: 15,
-            transform: 'scale(2.0)'
+            right: 0,
+            top: 0,
+            fontSize: '2em'
         },
         menuIcon: {
-            display: 'block',
+            display: 'flex',
             margin: 0,
-            marginLeft: 10,
             cursor: 'pointer'
         },
         nav: {
@@ -33,7 +38,10 @@ export default theme => ({
             zIndex: 2,
             backgroundColor: '#fff',
             transform: 'translateY(-100%)',
-            opacity: 0
+            opacity: 0,
+            flex: 1,
+            padding: 0,
+            margin: 0
         },
         navShow: {
             transform: 'translateY(0)',
@@ -50,13 +58,15 @@ export default theme => ({
         },
         figure: {
             maxWidth: 150,
+            minWidth: 100,
             extend: theme.colCenter
         },
         pro: {
             display: 'none'
         },
         button: {
-            padding: '5px 10px'
+            padding: '5px 10px',
+            margin: '0 10px'
         },
         root: {
             padding: '8px 0'
@@ -76,6 +86,7 @@ export default theme => ({
             color: theme.palette.grey,
             padding: '25px 15px',
             marginBottom: 2,
+            width: '100%',
             '&:last-child': {
                 marginBottom: 0
             }

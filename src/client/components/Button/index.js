@@ -6,14 +6,9 @@ import Text from '../Text'
 import Icon from '../Icon'
 
 const styles = theme => ({
-    root: {
-        extend: props => props.light ? theme.button.primaryLight : theme.button.primary,
-        '& path': {
-            fill: props => props.light ? '#386BD8' : '#073d8b',
-        },
-        '& *': {
-            color: props => props.light ? '#386BD8' : '#073d8b'
-        },
+    basic: {
+        borderRadius: '3px',
+        backgroundColor: 'rgba(0,0,0,0)',
         cursor: 'pointer',
         '&:active': {
             outline: 0
@@ -22,19 +17,43 @@ const styles = theme => ({
             outline: 0
         }
     },
+    light: {
+        composes: '$basic',
+        border: `1px solid ${theme.palette.primaryLight}`,
+        '& path': {
+            fill: theme.palette.primaryLight,
+        },
+        '& *': {
+            color: theme.palette.primaryLight
+        },
+    },
+    primary: {
+        composes: '$basic',
+        border: `1px solid ${theme.palette.secondary}`,
+        '& path': {
+            fill: theme.palette.primary,
+        },
+        '& *': {
+            color: theme.palette.primary
+        },
+    },
     text: {
-        display: 'inline-block',
-        whiteSpace: 'nowrap'
+        whiteSpace: 'nowrap',
+        ...theme.rowCenter,
+        alignItems: 'center',
     }
 });
 
 const Button = props => {
-    const {icon, text, className, classes} = props;
-    const buttonClass = className ? classes.root + ' ' + className : classes.root;
+    const {icon, text, className, classes, light, onClick} = props;
+    let buttonClass = light ? classes.light : classes.primary;
+    buttonClass = className ? buttonClass + ' ' + className : buttonClass;
     return (
-        <button className={buttonClass}>
-            {icon && <Icon name={icon} style={{marginRight: 5}}/>}
-            <Text className={classes.text} component={'span'}>{text}</Text>
+        <button className={buttonClass} onClick={onClick}>
+            <Text className={classes.text} component={'span'} weight={'medium'}>
+                {icon && <Icon name={icon} style={{marginRight: 5}}/>}
+                {text}
+            </Text>
         </button>
     )
 };
@@ -46,7 +65,8 @@ Button.propTypes = {
     ]),
     className: PropTypes.string,
     icon: PropTypes.string,
-    light: PropTypes.bool
+    light: PropTypes.bool,
+    onClick: PropTypes.func
 };
 
 export default injectSheet(styles)(Button);

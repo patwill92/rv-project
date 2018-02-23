@@ -65,8 +65,8 @@ const Filter = props => {
                 <div className={classes.separator}/>
                 <Text className={classes.filter} type={'subtitle'} component={'div'} weight={'medium'}>
                     <span className={classes.filterText}>Filter Results</span>
-                    <div onClick={() => homeUI({dropDown: !home.dropDown})}
-                        className={classes.dropdown}>
+                    <div onClick={() => props.homeUI({dropDown: !home.dropDown})}
+                         className={classes.dropdown}>
                         <Icon name={'caretDown'} className={classes.icon}/>
                     </div>
                 </Text>

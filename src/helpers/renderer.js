@@ -13,6 +13,7 @@ import theme from '../styles/theme'
 const jss = createJss();
 jss.setup(preset());
 
+
 export default (req, store, context, routes) => {
     const sheets = new SheetsRegistry();
     const initStore = store.getState();
@@ -109,6 +110,17 @@ export default (req, store, context, routes) => {
                      url('fonts/opensans-semibolditalic-webfont.woff') format('woff');
                 font-weight: 600;
                 font-style: italic;
+            }
+            #root {
+                  display: grid;
+                  min-height: inherit;
+                  grid-template-columns:1fr;
+                  grid-template-areas:
+                             "nav"
+                            "main"
+                            "footer";
+                  
+                  grid-template-rows: auto 1fr auto;
             }
         </style>
         <style type="text/css" id="server-side-styles">

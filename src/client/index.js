@@ -13,7 +13,6 @@ import theme from '../styles/theme'
 const store = createClientStore(window.INITIAL_STATE);
 const jss = createJss();
 jss.setup(preset());
-
 ReactDOM.hydrate(
     <Provider store={store}>
         <BrowserRouter>

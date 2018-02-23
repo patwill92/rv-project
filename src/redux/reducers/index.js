@@ -1,9 +1,9 @@
 import {combineReducers} from 'redux'
+import {reducer as form} from 'redux-form'
 
 import ui from './uiReducer'
-import dealers from './dealerReducer'
 
 export default combineReducers({
     ui,
-    dealers
+    form
 })

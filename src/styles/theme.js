@@ -10,10 +10,11 @@ const palette = {
     secondary: '#01c7c5',
     lightGrey: '#f5f5f5',
     grey: '#616161',
-    darkGrey: '#434343'
+    darkGrey: '#3f3f3f'
 };
 
-export default {
+export default sheet => ({
+    ...sheet,
     mediaQueries: (container, breakpoints) => {
         return breakpoints.reduce((acc, bPoints) => {
             return {
@@ -27,18 +28,6 @@ export default {
         }, {})
     },
     palette,
-    button: {
-        primaryLight: {
-            border: `1px solid ${palette.primaryLight}`,
-            borderRadius: '3px',
-            backgroundColor: 'rgba(0,0,0,0)'
-        },
-        primary: {
-            border: `1px solid ${palette.primary}`,
-            borderRadius: '3px',
-            backgroundColor: 'rgba(0,0,0,0)'
-        }
-    },
     colCenter: {
         ...flex('center', 'column ')
     },
@@ -102,4 +91,4 @@ export default {
         "0px 11px 14px -7px rgba(0, 0, 0, 0.2),0px 23px 36px 3px rgba(0, 0, 0, 0.14),0px 9px 44px 8px rgba(0, 0, 0, 0.12)",
         "0px 11px 15px -7px rgba(0, 0, 0, 0.2),0px 24px 38px 3px rgba(0, 0, 0, 0.14),0px 9px 46px 8px rgba(0, 0, 0, 0.12)"
     ]
-}
+})
