@@ -2,6 +2,7 @@ import express from 'express'
 import compression from 'compression'
 import bodyParser from 'body-parser'
 import {matchRoutes} from 'react-router-config'
+import directory from 'serve-index'
 import fs from 'fs'
 
 import routes from './client/Routes'
@@ -14,6 +15,7 @@ const app = express();
 app.use(compression());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
+app.use('/public', directory('public'));
 app.use(express.static('public'));
 app.use('/api', dealerRoutes);
 
