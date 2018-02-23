@@ -32,9 +32,9 @@ const styles = theme => ({
     ...fadeOutOverlay,
     '@global': {
         '::-webkit-scrollbar': {
-            width: 0,
-            background: 'transparent'
-        }
+            width: 0 + ' !important',
+            background: 'transparent !important'
+        },
     },
     overlay: {
         position: 'fixed',
@@ -61,7 +61,7 @@ const styles = theme => ({
         },
         maxHeight: '90%',
         overflowY: 'scroll',
-        '-webkit-overflow-scrolling': 'touch'
+        '-webkit-overflow-scrolling': 'touch',
     },
     header: {
         color: '#fff',
