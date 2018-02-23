@@ -50,10 +50,7 @@ const styles = theme => ({
     },
     '@media (max-width: 575px)': {
         root: {
-            background: '#fff',
-            '& img': {
-                display: 'none'
-            }
+            background: 'transparent',
         },
         mobileSend: {
             display: 'none'

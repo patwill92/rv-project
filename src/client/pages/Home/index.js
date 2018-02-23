@@ -15,7 +15,8 @@ const styles = {
         backgroundImage: 'url("images/water-image.png")',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'top center',
-        gridArea: 'main'
+        gridArea: 'main',
+        backgroundColor: '#fff'
     },
     '@media (min-width: 992px)': {
         root: {

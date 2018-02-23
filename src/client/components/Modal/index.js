@@ -72,6 +72,7 @@ const styles = theme => ({
         position: 'sticky',
         boxShadow: theme.shadows[3],
         top: 0,
+        bottom: 0,
         zIndex: 11
 
     },

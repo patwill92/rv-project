@@ -5,7 +5,6 @@ import Text from '../../../../components/Text'
 import Icon from '../../../../components/Icon'
 
 const styles = theme => ({
-    root: {},
     label: {
         extend: theme.colStart,
         color: theme.palette.grey,

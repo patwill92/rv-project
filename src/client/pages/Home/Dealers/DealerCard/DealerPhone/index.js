@@ -41,7 +41,8 @@ const styles = theme => ({
         },
         number: {
             fontSize: 20,
-            color: '#fff'
+            color: '#fff !important',
+            textDecoration: 'none !important'
         },
         mobileImage: {
           display: 'block',

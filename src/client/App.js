@@ -18,6 +18,7 @@ const styles = theme => ({
             position: 'relative',
             width: '100%',
             minHeight: '100vh',
+            backgroundColor: theme.palette.primaryLight
         },
         html: {
             minHeight: '100%'
