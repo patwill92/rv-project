@@ -116,18 +116,12 @@ const styles = theme => ({
     }
 });
 
-@connect(({ui, form}) => ({modal: ui.modal, form: form.contact}), {openModal, sendForm})
+@connect(({ui}) => ({modal: ui.modal}), {openModal, sendForm})
 @injectSheet(styles)
 class Modal extends Component {
     state = {
         animation: '',
-        overlay: '',
-        ownPool: false,
-        reply: ''
-    };
-
-    flipSwitch = () => {
-        this.setState({ownPool: !this.state.ownPool})
+        overlay: ''
     };
 
     componentDidMount = () => {
@@ -144,11 +138,6 @@ class Modal extends Component {
         }, () => {
             setTimeout(() => this.props.openModal(false), 300)
         })
-    };
-
-    sendForm = () => {
-        const formData = {...this.props.form.values, poolOwner: this.state.ownPool};
-        this.props.sendForm(formData);
     };
 
     render() {
@@ -171,7 +160,7 @@ class Modal extends Component {
                         <Text className={classes.message} component={'div'} type={'caption'}>
                             Fill out the form below and Premium <span>{modal.name}</span> will get in touch
                         </Text>
-                        <Form ownPool={this.state.ownPool} closeModal={this.closeModal} flipSwitch={this.flipSwitch} onSubmit={this.sendForm}
+                        <Form closeModal={this.closeModal}
                               reply={modal.message || null}/>
                     </Container>
                     <Container className={classes.footer} padding>

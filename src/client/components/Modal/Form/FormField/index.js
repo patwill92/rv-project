@@ -108,19 +108,28 @@ const styles = theme => ({
 });
 
 const FormField = props => {
-    const {classes, last, meta: {touched, error}, onClick, input, type} = props;
+    const {classes, last, onClick, input, type, onChange, value: {value, errors, touched, blur}, name} = props;
+    let error = errors && errors.hasOwnProperty(name) && blur;
     return (
         <div className={classes.root}>
             <label className={classes.label} htmlFor={props.name}>
                 <Text className={classes.labelText} component={'span'} weight={'medium'}>
                     {props.label}
-                    {(type && touched && !error) && <img src="images/checkmark-circle.png" alt="validation"/>}
+                    {(type && touched && !error && blur) && <img src="images/checkmark-circle.png" alt="validation"/>}
                     {(type && touched && error) && <div className={classes.circle}><Icon name={'timesCircle'}/></div>}
-                    {(type && !touched) && <img src="images/circle-form.png" alt="validation"/>}
+                    {(type && !touched || type && touched && !blur) &&
+                    <img src="images/circle-form.png" alt="validation"/>}
                 </Text>
                 {props.type ?
-                    <input className={classes.normal} {...input}/> :
-                    <textarea {...input} className={classes.textArea} cols="30" rows="5"/>}
+                    <input className={classes.normal}
+                           value={value}
+                           onChange={onChange}
+                           onBlur={props.onBlur}
+                           onClick={() => props.onTouch(name)}
+                           type={type}
+                           name={name}/> :
+                    <textarea value={value} onChange={onChange} className={classes.textArea} name={name} cols="30"
+                              rows="5"/>}
             </label>
             {last &&
             <Fragment>

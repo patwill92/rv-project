@@ -1,11 +1,12 @@
 import React from 'react'
-import {Field, reduxForm} from 'redux-form'
 import injectSheet from 'react-jss'
+import {connect} from 'react-redux'
 
 import validate from './data/validate'
 import fieldInfo from './data/fieldInfo'
 import FormField from './FormField'
 import Text from '../../../components/Text'
+import {sendForm} from "../../../../redux/actions"
 
 const styles = theme => ({
     root: {
@@ -64,53 +65,123 @@ const styles = theme => ({
 
 });
 
-let ContactForm = props => {
-    const {classes, reply} = props;
-    const replyStyle = {
-        height: this.reply && this.reply.clientHeight,
-        width: this.reply && this.reply.clientWidth
+class ContactForm extends React.Component {
+    state = {
+        ownPool: false,
+        reply: '',
+        name: {
+            value: '',
+            touched: false,
+            blur: false,
+            errors: false
+        },
+        email: {
+            value: '',
+            touched: false,
+            blur: false,
+            errors: false
+        },
+        comments: '',
+        phone: {
+            value: '',
+            touched: false,
+            blur: false,
+            errors: false
+        }
     };
-    return (
-        <div>
-            {!reply &&
-            <form ref={reply => this.reply = reply} onSubmit={props.handleSubmit} className={classes.root}>
-                {fieldInfo.map((field, i) => {
-                    return (
-                        <Field {...field}
-                               ownPool={props.ownPool}
-                               onClick={props.flipSwitch}
-                               last={i === fieldInfo.length - 1}
-                               key={i}
-                               component={FormField}/>
-                    )
-                })}
-                <button type={'submit'} className={classes.button} onClick={() => console.log(props)}>
-                    <Text className={classes.textBtn} component={'div'} weight={'medium'}>
-                        Send <span className={classes.mobileSend} style={{marginLeft: 2}}>my email</span>
-                        <img src="images/next-arrow.png" alt=""/>
-                    </Text>
-                </button>
-            </form>}
-            {reply &&
-            <div className={classes.reply} style={replyStyle}>
-                <Text className={classes.replyText} component={'div'} type={'subtitle'}>
-                    {reply}
-                </Text>
-                <button onClick={props.closeModal} className={classes.button}>
-                    <Text className={classes.textBtn} component={'div'} weight={'medium'}>
-                        BACK
-                    </Text>
-                </button>
-            </div>}
-        </div>
-    )
-};
 
-ContactForm = reduxForm({
-    form: 'contact',
-    destroyOnUnmount: true,
-    forceUnregisterOnUnmount: true,
-    validate
-})(injectSheet(styles)(ContactForm));
+    onTouch = (name) => {
+        this.setState({[name]: {...this.state[name], touched: true}})
+    };
 
-export default ContactForm
+    onChange = (e) => {
+        const {name, value} = e.target;
+        if (this.state[name].blur) {
+            this.setState({[name]: {...this.state[name], value}}, () => {
+                this.setState({[name]: {...this.state[name], errors: validate(this.state)}})
+            })
+        } else {
+            this.setState({[name]: {...this.state[name], touched: true, value}})
+        }
+    };
+
+    onBlur = (e) => {
+        const {name} = e.target;
+        this.setState({[name]: {...this.state[name], blur: true, errors: validate(this.state)}})
+    };
+
+    flipSwitch = () => {
+        this.setState({ownPool: !this.state.ownPool})
+    };
+
+    handleSubmit = (e) => {
+        e.preventDefault();
+        let errors = validate(this.state, true);
+        let errorList = Object.values(errors);
+        if (errorList.length > 0) {
+            let state = Object.entries(this.state).reduce((acc, val) => {
+                if (typeof val[1] === 'object') {
+                    return {
+                        ...acc,
+                        [val[0]]: {
+                            ...this.state[val[0]],
+                            errors,
+                            blur: true,
+                            touched: true
+                        }
+                    }
+                } else {
+
+                    return {...this.state, ...acc};
+                }
+            }, {});
+            return this.setState(state)
+        }
+        this.props.sendForm({...this.state, poolOwner: this.state.ownPool})
+    };
+
+    render() {
+        const {props} = this;
+        const {classes, reply} = props;
+        return (
+            <div>
+                {!reply &&
+                <form onSubmit={this.handleSubmit} className={classes.root}>
+                    {fieldInfo.map((field, i) => {
+                        return (
+                            <FormField {...field}
+                                       value={this.state[field.name]}
+                                       onChange={this.onChange}
+                                       onBlur={this.onBlur}
+                                       ownPool={this.state.ownPool}
+                                       onTouch={this.onTouch}
+                                       onClick={this.flipSwitch}
+                                       last={i === fieldInfo.length - 1}
+                                       key={i}/>
+                        )
+                    })}
+                    <button type={'submit'} className={classes.button}>
+                        <Text className={classes.textBtn} component={'div'} weight={'medium'}>
+                            Send <span className={classes.mobileSend} style={{marginLeft: 2}}>my email</span>
+                            <img src="images/next-arrow.png" alt=""/>
+                        </Text>
+                    </button>
+                </form>}
+                {reply &&
+                <div className={classes.reply} >
+                    <Text className={classes.replyText} component={'div'} type={'subtitle'}>
+                        {reply}
+                    </Text>
+                    <button onClick={props.closeModal} className={classes.button}>
+                        <Text className={classes.textBtn} component={'div'} weight={'medium'}>
+                            CLOSE
+                        </Text>
+                    </button>
+                </div>}
+            </div>
+        )
+    };
+}
+
+
+export default connect(null, {sendForm})(injectSheet(styles)(ContactForm))

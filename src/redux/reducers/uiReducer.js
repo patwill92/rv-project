@@ -7,7 +7,7 @@ export default (state = {}, action) => {
         case OPEN_MODAL:
             let payload = !action.payload ? action.payload :
                 {...state.modal, ...action.payload};
-            return {...state, modal: action.payload};
+            return {...state, modal: payload};
         case HOME_UI:
             return {...state, home: {...state.home, ...action.payload}};
         default:

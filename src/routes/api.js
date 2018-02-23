@@ -14,7 +14,7 @@ app.route('/dealers')
 
 app.route('/form')
     .post((req, res) => {
-        res.json({message: `Thank you, ${req.body.name}, we'll get back to you shortly!`})
+        res.json({message: `Thank you, ${req.body.name.value}, we'll get back to you shortly!`})
     });
 
 export default app;
