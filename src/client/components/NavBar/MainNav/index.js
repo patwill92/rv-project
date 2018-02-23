@@ -87,17 +87,30 @@ const styles = theme => ({
 
 class MainNav extends Component {
     state = {
-        opened: false
+        opened: false,
+        width: ''
+    };
+
+    componentDidMount = () => {
+        window.addEventListener('resize', () => {
+            this.setState({width: window.innerWidth});
+            if(this.state.width >=768){
+                this.setState({opened: false});
+                this.props.toggleNav(false);
+            }
+        })
     };
 
     openNav = () => {
-        if (this.state.opened) {
-            this.props.toggleNav(!this.props.navOpen);
-            setTimeout(() => this.setState({opened: false}), 400)
-        } else {
-            this.setState({opened: true});
-            this.props.toggleNav(!this.props.navOpen);
-        }
+        if(this.state.width < 768) {
+           if (this.state.opened) {
+               this.props.toggleNav(!this.props.navOpen);
+               setTimeout(() => this.setState({opened: false}), 400)
+           } else {
+               this.setState({opened: true});
+               this.props.toggleNav(!this.props.navOpen);
+           }
+       }
     };
 
     render() {
@@ -129,8 +142,9 @@ class MainNav extends Component {
                                 return (
                                     <Text key={link} className={classes.links}
                                           weight={'medium'}
+                                          onClick={this.openNav}
                                           component={Link}
-                                          to={`/${link.replace(/\s+/g, '')}`}>
+                                          to={`/${link.replace(/\s+/g, '').toLowerCase()}`}>
                                         {link}
                                         <figure className={classes.arrow}>
                                             <img className={classes.img} src="images/next-arrow.png"
