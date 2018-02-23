@@ -21,7 +21,6 @@ export const filterDealers = payload => async dispatch => {
     const {action, currentQuery, value, dealers} = payload;
     if (action) {
         let query = [...currentQuery, value];
-        console.log(query, dealers)
         let newList = queryDealers(query, dealers);
         dispatch({type: HOME_UI, payload: newList})
     } else {

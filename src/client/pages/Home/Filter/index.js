@@ -55,7 +55,7 @@ const styles = theme => ({
 });
 
 const Filter = props => {
-    const {classes, home, homeUI} = props;
+    const {classes, home} = props;
     const dealerTypes = ['Service', 'Installation', 'Residential', 'Commercial'];
     return (
         <Container className={classes.root} component={'section'}>

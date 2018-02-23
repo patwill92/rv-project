@@ -20,7 +20,8 @@ export default theme => ({
             position: 'absolute',
             right: 0,
             top: 0,
-            fontSize: '2em'
+            fontSize: '2em',
+            cursor: 'pointer'
         },
         menuIcon: {
             display: 'flex',
@@ -89,6 +90,9 @@ export default theme => ({
             width: '100%',
             '&:last-child': {
                 marginBottom: 0
+            },
+            '&:hover': {
+                transform: 'none'
             }
         }
     }

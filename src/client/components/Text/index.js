@@ -32,11 +32,13 @@ export const Text = props => {
         classes,
         capitalize,
         uppercase,
-        onClick
+        onClick,
+        style,
+        href
     } = props;
     let textClass = getClassNames(type, weight, classes, italic, capitalize, uppercase).join(' ');
     textClass = className ? textClass + ' ' + className : textClass;
-    const parentProps = {className: textClass, to, onClick};
+    const parentProps = {className: textClass, to, onClick, style, href};
     if (component) {
         return React.createElement(component, {...parentProps}, children)
     }
@@ -73,12 +75,14 @@ Text.propTypes = {
     to: PropTypes.string,
     capitalize: PropTypes.bool,
     uppercase: PropTypes.bool,
-    onClick: PropTypes.func
+    onClick: PropTypes.func,
+    style: PropTypes.object
 };
 
 Text.defaultProps = {
     type: 'normal',
-    weight: 'regular'
+    weight: 'regular',
+    href: '#'
 };
 
 export default injectSheet(styles, {link: true})(Text)

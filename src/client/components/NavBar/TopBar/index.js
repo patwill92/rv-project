@@ -27,8 +27,8 @@ const styles = theme => ({
     }
 });
 
-const TopBar =  ({classes, modal}) => (
-    <section className={classes.root} style={{paddingRight: modal ? 17 : 0}}>
+const TopBar =  ({classes}) => (
+    <section className={classes.root} >
         <Container className={classes.container} component='nav'>
             <Text className={classes.links} type={'caption'}>Dealers and Distributors</Text>
             <Text className={classes.links} type={'caption'}>

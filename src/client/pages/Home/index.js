@@ -37,9 +37,9 @@ class Home extends Component {
     };
 
     render() {
-        const {classes, modal} = this.props;
+        const {classes} = this.props;
         return (
-            <main className={classes.root} style={{paddingRight: modal ? 17 : 0}}>
+            <main className={classes.root}>
                 <Container component={'section'}>
                     <Filter/>
                 </Container>
@@ -61,6 +61,6 @@ const loadData = fs => {
 };
 
 export default {
-    component: connect(({ui}) => ({modal: ui.modal}), {getDealers})(injectSheet(styles)(Home)),
+    component: connect(null, {getDealers})(injectSheet(styles)(Home)),
     loadData
 }

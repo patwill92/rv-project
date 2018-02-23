@@ -31,6 +31,10 @@ const styles = theme => ({
         display: 'none',
         color: '#fff',
     },
+    number: {
+        color: theme.palette.darkGrey,
+        textDecoration: 'none'
+    },
     '@media (max-width: 575px)': {
         phoneContainer: {
             backgroundColor: theme.palette.primaryLight,
@@ -71,7 +75,7 @@ const DealerPhone = props => {
                 <Text className={classes.mobileCaption} component={'figcaption'} type={'caption'}>
                     Tap to call
                 </Text>
-                <Text className={classes.number} component={'div'} type={'title'} weight={'bold'}>
+                <Text href={`tel:${number}`} className={classes.number} component={'a'} type={'title'} weight={'bold'}>
                     {number.replace(/-/g, '.')}
                 </Text>
             </div>

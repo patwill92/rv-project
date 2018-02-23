@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Component} from 'react'
 import injectSheet from 'react-jss'
 import {connect} from 'react-redux'
 
@@ -12,7 +12,8 @@ const styles = theme => ({
         lineHeight: '100%',
         alignItems: 'center',
         extend: theme.rowBetween,
-        marginLeft: '0.5em'
+        marginLeft: '0.5em',
+        position: 'relative'
     },
     radio: {
         height: 20,
@@ -44,33 +45,73 @@ const styles = theme => ({
             width: 'auto',
             height: 19
         },
-        display: 'inline-block'
+        display: 'inline-block',
+        position: 'relative'
+    },
+    toolTipMessage: {
+        width: 150,
+        color: theme.palette.darkGrey,
+        position: 'absolute',
+        backgroundColor: theme.palette.lightGrey,
+        padding: 10,
+        bottom: 'calc(100% + 5px)',
+        boxShadow: theme.shadows[2],
+        transition: 'opacity 0.5s ease'
     },
     ...mobileStyles(theme)
 });
 
-const Radio = props => {
-    const {classes, text, i, service} = props;
-    return (
-        <label className={classes.root} htmlFor={service}>
-            <input value={text.toLowerCase()}
-                   type="checkbox"
-                   checked={props.filters.includes(text.toLowerCase())}
-                   className={classes.radio}
-                   onChange={(e) => {
-                       props.filterDealers({
-                           action: e.target.checked,
-                           value: e.target.value,
-                           currentQuery: props.filters,
-                           dealers: props.dealers
-                       })
-                   }}/>
-            <Text type={'caption'} weight={'medium'} component={'span'} className={classes.text}>{text}</Text>
-            {i && <figure className={classes.toolTip}>
-                <img src="images/tool-tip-icon-filtering.png" alt=""/>
-            </figure>}
-        </label>
-    )
-};
+class Radio extends Component {
+    state = {
+        toolTip: false
+    };
 
-export default connect(({ui}) => ({filters: ui.home.filters, list: ui.home.list, dealers: ui.home.dealers}), {filterDealers})(injectSheet(styles)(Radio))
+    handleIn = () => {
+        this.setState({toolTip: false})
+    };
+
+    handleOut = () => {
+        this.setState({toolTip: true})
+    };
+
+    handleTool = () => {
+        this.setState({toolTip: !this.state.toolTip})
+    };
+
+    render() {
+        const {classes, text, i, service, dealers, filters} = this.props;
+        const {toolTip} = this.state;
+        return (
+            <label className={classes.root} htmlFor={service}>
+                <input value={text.toLowerCase()}
+                       type="checkbox"
+                       checked={filters.includes(text.toLowerCase())}
+                       className={classes.radio}
+                       onChange={(e) => {
+                           this.props.filterDealers({
+                               action: e.target.checked,
+                               value: e.target.value,
+                               currentQuery: filters,
+                               dealers
+                           })
+                       }}/>
+                <Text type={'caption'} weight={'medium'} component={'span'} className={classes.text}>{text}</Text>
+                {i && <figure className={classes.toolTip}>
+                    <Text type={'caption'}
+                          className={classes.toolTipMessage}
+                          style={{opacity: toolTip ? 1 : 0}}>Lorem ipsum dolor sit amet, consectetur
+                        adipisicing elit.</Text>
+                    <img onMouseOver={this.handleOut}
+                         onClick={this.handleTool}
+                         onMouseOut={this.handleIn} src="images/tool-tip-icon-filtering.png" alt=""/>
+                </figure>}
+            </label>
+        )
+    };
+}
+
+export default connect(({ui}) => ({
+    filters: ui.home.filters,
+    list: ui.home.list,
+    dealers: ui.home.dealers
+}), {filterDealers})(injectSheet(styles)(Radio))

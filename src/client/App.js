@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from 'react'
+import React, {Fragment} from 'react'
 import injectSheet from 'react-jss'
 import {renderRoutes} from 'react-router-config'
 import {connect} from 'react-redux'
@@ -17,31 +17,28 @@ const styles = theme => ({
             margin: 0,
             position: 'relative',
             width: '100%',
-            minHeight: '100vh',
+            minHeight: '100%',
             backgroundColor: theme.palette.primaryLight
         },
-        html: {
-            minHeight: '100%'
+        'a:[href^="tel:"]': {
+            color: '#fff !important',
+            textDecoration: 'none !important'
         }
     }
 });
 
-@connect(({ui}) => ({nav: ui.nav, modal: ui.modal}))
-@injectSheet(styles)
-class App extends Component {
-    render() {
-        const {route, modal, classes} = this.props;
-        return (
-            <Fragment>
-                <NavBar modal={modal}/>
-                {renderRoutes(route.routes)}
-                <Footer modal={modal}/>
-                {modal && <Modal/>}
-            </Fragment>
-        )
-    }
-}
+const App = props => {
+    const {route, modal} = props;
+    return (
+        <Fragment>
+            <NavBar modal={modal}/>
+            {renderRoutes(route.routes)}
+            <Footer modal={modal}/>
+            {modal && <Modal/>}
+        </Fragment>
+    )
+};
 
 export default {
-    component: App
+    component: connect(({ui}) => ({nav: ui.nav, modal: ui.modal}))(injectSheet(styles)(App))
 };

@@ -15,7 +15,8 @@ const styles = theme => ({
         },
         '&:focus': {
             outline: 0
-        }
+        },
+        transition: 'color 0.5s ease, background-color 0.5s ease'
     },
     light: {
         composes: '$basic',
@@ -26,6 +27,15 @@ const styles = theme => ({
         '& *': {
             color: theme.palette.primaryLight
         },
+        '&:hover': {
+            '& path': {
+                fill: '#fff',
+            },
+            '& *': {
+                color: '#fff'
+            },
+            backgroundColor: theme.palette.primaryLight
+        }
     },
     primary: {
         composes: '$basic',
@@ -36,6 +46,12 @@ const styles = theme => ({
         '& *': {
             color: theme.palette.primary
         },
+        '&:hover': {
+            '& *': {
+                color: '#fff'
+            },
+            backgroundColor: theme.palette.secondary
+        }
     },
     text: {
         whiteSpace: 'nowrap',

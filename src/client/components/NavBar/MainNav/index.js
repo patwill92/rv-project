@@ -24,7 +24,11 @@ const styles = theme => ({
         color: theme.palette.primary,
         padding: '0px 15px',
         textDecoration: 'none',
-        display: 'inline-block'
+        display: 'inline-block',
+        '&:hover': {
+            transform: 'scale(1.1)'
+        },
+        transition: 'transform 0.2s ease'
     },
     figure: {
         maxWidth: 216,
@@ -97,7 +101,7 @@ class MainNav extends Component {
     };
 
     render() {
-        const {classes, modal} = this.props;
+        const {classes} = this.props;
         let navClass;
         if (this.state.opened) {
             navClass = this.props.navOpen ? classes.navShow + ' ' + classes.nav : classes.navHide + ' ' + classes.nav;
@@ -106,7 +110,7 @@ class MainNav extends Component {
         }
         const linkList = ['Pools & Spas', 'Supplies', 'Resources', 'Services'];
         return (
-            <section className={classes.root} style={{paddingRight: modal ? 17 : 0}}>
+            <section className={classes.root}>
                 <Container className={classes.container}>
                     <figure className={classes.figure}>
                         <img className={classes.img} src="images/pool-pros-logo.png" alt="pool-props-logo"/>
@@ -126,7 +130,8 @@ class MainNav extends Component {
                                     <Text key={link} className={classes.links}
                                           weight={'medium'}
                                           component={Link}
-                                          to={`/${link.replace(/\s+/g, '')}`}><span>{link}</span>
+                                          to={`/${link.replace(/\s+/g, '')}`}>
+                                        {link}
                                         <figure className={classes.arrow}>
                                             <img className={classes.img} src="images/next-arrow.png"
                                                  alt="pool-props-logo"/>
