@@ -6,6 +6,7 @@ import {connect} from 'react-redux'
 import Text from '../../Text'
 import Container from '../../Container'
 import Button from '../../Button'
+import Logo from './Logo'
 import {toggleNav} from "../../../../redux/actions";
 import mobileStyles from './mobileStyles'
 
@@ -32,7 +33,8 @@ const styles = theme => ({
     },
     figure: {
         maxWidth: 216,
-        margin: 0
+        margin: 0,
+        cursor: 'pointer'
     },
     img: {
         maxWidth: '100%'
@@ -94,7 +96,7 @@ class MainNav extends Component {
     componentDidMount = () => {
         window.addEventListener('resize', () => {
             this.setState({width: window.innerWidth});
-            if(this.state.width >=768){
+            if (this.state.width >= 768) {
                 this.setState({opened: false});
                 this.props.toggleNav(false);
             }
@@ -102,15 +104,15 @@ class MainNav extends Component {
     };
 
     openNav = () => {
-        if(this.state.width < 768) {
-           if (this.state.opened) {
-               this.props.toggleNav(!this.props.navOpen);
-               setTimeout(() => this.setState({opened: false}), 400)
-           } else {
-               this.setState({opened: true});
-               this.props.toggleNav(!this.props.navOpen);
-           }
-       }
+        if (this.state.width < 768) {
+            if (this.state.opened) {
+                this.props.toggleNav(!this.props.navOpen);
+                setTimeout(() => this.setState({opened: false}), 400)
+            } else {
+                this.setState({opened: true});
+                this.props.toggleNav(!this.props.navOpen);
+            }
+        }
     };
 
     render() {
@@ -125,9 +127,7 @@ class MainNav extends Component {
         return (
             <section className={classes.root}>
                 <Container className={classes.container}>
-                    <figure className={classes.figure}>
-                        <img className={classes.img} src="images/pool-pros-logo.png" alt="pool-props-logo"/>
-                    </figure>
+                    <Logo classes={classes}/>
                     <section className={classes.linksWrapper}>
                         <nav className={navClass}>
                             <Text className={classes.navHeader}

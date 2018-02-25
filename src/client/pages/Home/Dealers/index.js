@@ -5,14 +5,25 @@ import {connect} from 'react-redux'
 import Container from '../../../components/Container'
 import Dealer from './DealerCard'
 
-const styles = theme => ({
+const styles = {
     root: {
-        extend: theme.rowBetween,
-        alignItems: 'top',
-        flexWrap: 'wrap',
-        paddingTop: 50
+        paddingTop: 50,
+        display: 'grid',
+        gridTemplateColumns: 'repeat(3,1fr)',
+        gridGap: '15px'
+
+    },
+    '@media (max-width: 991px)': {
+        root: {
+            gridTemplateColumns: 'repeat(2,1fr)',
+        }
+    },
+    '@media (max-width: 767px)': {
+        root: {
+            gridTemplateColumns: '1fr',
+        }
     }
-});
+};
 
 const Dealers = props => {
     const {classes, dealers} = props;

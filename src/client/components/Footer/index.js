@@ -34,6 +34,12 @@ const styles = theme => ({
         },
         marginLeft: 20
     },
+    legalText: {
+        cursor: 'pointer'
+    },
+    icon: {
+        composes: '$legalText'
+    },
     legal: {
         backgroundColor: theme.palette.primaryLight,
         composes: '$socialText',
@@ -81,7 +87,7 @@ const Footer = props => {
                         <div className={classes.icons}>
                             {['twitter', 'facebook', 'youtube'].map(link => {
                                 return (
-                                    <Icon name={link} key={link}/>
+                                    <Icon className={classes.icon} name={link} key={link}/>
                                 )
                             })}
                         </div>

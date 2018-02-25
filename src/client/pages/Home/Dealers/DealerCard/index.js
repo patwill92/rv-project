@@ -10,10 +10,8 @@ import {openModal} from "../../../../../redux/actions";
 
 const styles = theme => ({
     root: {
-        flexBasis: '32.5%',
         borderRadius: 10,
-        boxShadow: theme.shadows[3],
-        marginBottom: 20
+        boxShadow: theme.shadows[3]
     },
     header: {
         textAlign: 'center',
@@ -56,16 +54,6 @@ const styles = theme => ({
     serviceWrapper: {
         flexBasis: '50%',
         extend: theme.colBetween
-    },
-    '@media (max-width: 991px)': {
-        root: {
-            flexBasis: '49.5%'
-        }
-    },
-    '@media (max-width: 767px)': {
-        root: {
-            flexBasis: '100%'
-        }
     }
 });
 
