@@ -11,7 +11,7 @@ const styles = theme => ({
     '@global': {
         '*': {
             boxSizing: 'border-box',
-            fontFamily: "'Open Sans', 'o-sans', 'sans-serif'"
+            fontFamily: "'Open Sans', 'OpenSans'",
         },
         body: {
             margin: 0,

@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import injectSheet from 'react-jss'
 import {connect} from 'react-redux'
 
+import Head from '../../components/Head'
 import Filter from './Filter'
 import Dealers from './Dealers'
 import Container from '../../components/Container'
@@ -39,12 +40,14 @@ class Home extends Component {
     render() {
         const {classes} = this.props;
         return (
-            <main className={classes.root}>
-                <Container component={'section'}>
-                    <Filter/>
-                </Container>
-                <Dealers/>
-            </main>
+            <Head name={'Home'} url={''}>
+                <main className={classes.root}>
+                    <Container component={'section'}>
+                        <Filter/>
+                    </Container>
+                    <Dealers/>
+                </main>
+            </Head>
         )
     };
 }
