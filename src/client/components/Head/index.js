@@ -11,7 +11,7 @@ const Head = ({name, url, children}) => {
                 <meta property={'og:title'} content={`${name.toUpperCase()} - POOL PROS`} />
                 <meta property={'og:description'} content={"The best pool pro finder service around"} />
                 <meta property={'og:url'} content={`https://rvproject.herokuapp.com/${url}`} />
-                <meta property={'og:image'} content={"https://rvproject.herokuapp.com//images/pool-pros-logo.png"} />
+                <meta property={'og:image'} content={"https://rvproject.herokuapp.com/images/pool-pros-logo.png"} />
             </Helmet>
             {children}
         </Fragment>
