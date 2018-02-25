@@ -3,11 +3,11 @@ import React from 'react'
 import TopBar from './TopBar'
 import MainNav from './MainNav'
 
-const NavBar = ({modal}) => {
+const NavBar = () => {
     return (
         <header style={{gridArea: 'nav'}}>
-            <TopBar modal={{modal}}/>
-            <MainNav modal={modal}/>
+            <TopBar />
+            <MainNav />
         </header>
     )
 };

@@ -60,7 +60,7 @@ const Filter = props => {
     return (
         <Container className={classes.root} component={'section'}>
             <div className={classes.subContainer}>
-                <Text className={classes.title} type={'subtitle'} component={'div'} weight={'medium'}>7 dealers in
+                <Text className={classes.title} type={'subtitle'} component={'div'} weight={'medium'}>{home.list.length} dealers in
                     28226</Text>
                 <div className={classes.separator}/>
                 <Text className={classes.filter} type={'subtitle'} component={'div'} weight={'medium'}>
@@ -70,7 +70,6 @@ const Filter = props => {
                         <Icon name={'caretDown'} className={classes.icon}/>
                     </div>
                 </Text>
-
             </div>
             <div className={classes.filterContainer}>
                 {dealerTypes.map((type, i) => {

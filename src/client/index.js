@@ -13,6 +13,12 @@ import theme from '../styles/theme'
 const store = createClientStore(window.INITIAL_STATE);
 const jss = createJss();
 jss.setup(preset());
+
+if (process.env.NODE_ENV !== 'production') {
+    const {whyDidYouUpdate} = require('why-did-you-update');
+    whyDidYouUpdate(React);
+}
+
 ReactDOM.hydrate(
     <Provider store={store}>
         <BrowserRouter>

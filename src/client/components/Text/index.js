@@ -67,7 +67,7 @@ Text.propTypes = {
     italic: PropTypes.bool,
     type: PropTypes.string,
     className: PropTypes.string,
-    children: PropTypes.node,
+    children: PropTypes.node.isRequired,
     component: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.func,

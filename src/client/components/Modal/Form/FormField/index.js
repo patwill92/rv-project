@@ -108,7 +108,7 @@ const styles = theme => ({
 });
 
 const FormField = props => {
-    const {classes, last, onClick, input, type, onChange, value: {value, errors, touched, blur}, name} = props;
+    const {classes, last, flipSwitch, input, type, onChange, errors, value: {value, touched, blur}, name} = props;
     let error = errors && errors.hasOwnProperty(name) && blur;
     return (
         <div className={classes.root}>
@@ -125,7 +125,6 @@ const FormField = props => {
                            value={value}
                            onChange={onChange}
                            onBlur={props.onBlur}
-                           onClick={() => props.onTouch(name)}
                            type={type}
                            name={name}/> :
                     <textarea value={value} onChange={onChange} className={classes.textArea} name={name} cols="30"
@@ -141,7 +140,7 @@ const FormField = props => {
                           component={'div'}>YES</Text>
                     <Text className={classes.ownPoolNo} type={'caption'} weight={'medium'}
                           component={'div'}>NO</Text>
-                    <div onClick={onClick} className={classes.insideBox}/>
+                    <div onClick={flipSwitch} className={classes.insideBox}/>
                 </div>
                 <div style={{width: '100%', height: 1, backgroundColor: '#eaeaea', marginTop: 20}}/>
             </Fragment>

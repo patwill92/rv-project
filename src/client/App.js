@@ -31,14 +31,14 @@ const App = props => {
     const {route, modal} = props;
     return (
         <Fragment>
-            <NavBar modal={modal}/>
+            <NavBar/>
             {renderRoutes(route.routes)}
-            <Footer modal={modal}/>
+            <Footer/>
             {modal && <Modal/>}
         </Fragment>
     )
 };
 
 export default {
-    component: connect(({ui}) => ({nav: ui.nav, modal: ui.modal}))(injectSheet(styles)(App))
+    component: connect(({ui}) => ({modal: ui.modal}))(injectSheet(styles)(App))
 };

@@ -72,42 +72,38 @@ class ContactForm extends React.Component {
         name: {
             value: '',
             touched: false,
-            blur: false,
-            errors: false
+            blur: false
         },
         email: {
             value: '',
             touched: false,
-            blur: false,
-            errors: false
+            blur: false
         },
         comments: '',
         phone: {
             value: '',
             touched: false,
-            blur: false,
-            errors: false
-        }
-    };
-
-    onTouch = (name) => {
-        this.setState({[name]: {...this.state[name], touched: true}})
+            blur: false
+        },
+        errors: false
     };
 
     onChange = (e) => {
         const {name, value} = e.target;
         if (this.state[name].blur) {
             this.setState({[name]: {...this.state[name], value}}, () => {
-                this.setState({[name]: {...this.state[name], errors: validate(this.state)}})
+                this.setState({[name]: {...this.state[name]}, errors: validate(this.state)})
             })
         } else {
-            this.setState({[name]: {...this.state[name], touched: true, value}})
+            this.setState({[name]: {...this.state[name], value}})
         }
     };
 
     onBlur = (e) => {
-        const {name} = e.target;
-        this.setState({[name]: {...this.state[name], blur: true, errors: validate(this.state)}})
+        const {name, value} = e.target;
+        this.setState({[name]: {...this.state[name], blur: true, touched: true, value}}, () => {
+            this.setState({errors: validate(this.state)})
+        })
     };
 
     flipSwitch = () => {
@@ -125,14 +121,13 @@ class ContactForm extends React.Component {
                         ...acc,
                         [val[0]]: {
                             ...this.state[val[0]],
-                            errors,
                             blur: true,
                             touched: true
                         }
                     }
                 } else {
 
-                    return {...this.state, ...acc};
+                    return {...this.state, ...acc, errors};
                 }
             }, {});
             return this.setState(state)
@@ -151,11 +146,11 @@ class ContactForm extends React.Component {
                         return (
                             <FormField {...field}
                                        value={this.state[field.name]}
+                                       errors={this.state.errors}
                                        onChange={this.onChange}
                                        onBlur={this.onBlur}
                                        ownPool={this.state.ownPool}
-                                       onTouch={this.onTouch}
-                                       onClick={this.flipSwitch}
+                                       flipSwitch={this.flipSwitch}
                                        last={i === fieldInfo.length - 1}
                                        key={i}/>
                         )
@@ -163,7 +158,7 @@ class ContactForm extends React.Component {
                     <button type={'submit'} className={classes.button}>
                         <Text className={classes.textBtn} component={'div'} weight={'medium'}>
                             Send <span className={classes.mobileSend} style={{marginLeft: 2}}>my email</span>
-                            <img src="images/next-arrow.png" alt=""/>
+                            <img className={classes.mobileSend} src="images/next-arrow.png" alt=""/>
                         </Text>
                     </button>
                 </form>}

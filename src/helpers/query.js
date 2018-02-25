@@ -1,13 +1,15 @@
 export default () => ({
     queryDealers: (query, dealers) => {
-        if (query.length === 0) return {list: [], filters: query};
+        if (query.length === 0) return {list: dealers, filters: query};
         let result = dealers.filter((dealer) => {
-            let compareArray = dealer.data.certifications.map((cert) => {
+            let certifications = dealer.data.certifications.map((cert) => {
                 return cert.substr(0, cert.indexOf(' ')).toLowerCase();
             });
-            return query.every((element) => {
-                return compareArray.includes(element)
-            });
+            return query.reduce((acc, param) => {
+                if(certifications.includes(param))
+                    return true;
+                return acc
+            }, false)
         });
         return {list: result, filters: query}
     }
